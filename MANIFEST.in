@@ -1,0 +1,12 @@
+global-include *.py
+include *.rst
+include *.sh
+include tox.ini
+
+# Patterns to exclude from any directory
+global-exclude *.git*
+global-exclude *.ipynb_checkpoints*
+global-exclude *.tox*
+
+# Exclude all bytecode
+global-exclude *.pyc *.pyo *.pyd
