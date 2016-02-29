@@ -19,7 +19,7 @@ Release History
    - Bugfixes
    - Documentation
 
-0.1.0 (unreleased)
+0.1.0 (2016-02-28)
 ==================
 
 Initial release of ``pytest-cram``! Supports Python 2.7+ and 3.3+.
