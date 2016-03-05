@@ -12,7 +12,7 @@ def pytest_addoption(parser):
     group = parser.getgroup("general")
     group.addoption("--nocram", action="store_true",
                     help="do not run cram tests")
-    group.addoption("--shell", default='/bin/sh',
+    group.addoption("--shell", default=os.environ.get('CRAMSHELL', '/bin/sh'),
                     help="shell to run cram tests with")
     parser.addini("cramignore", type="linelist",
                   help="each line specifies a file or file pattern that will "

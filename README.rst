@@ -56,6 +56,10 @@ To override the shell used by cram, do ::
 
   py.test --shell="C:\git\bash.exe"
 
+or set the ``CRAMSHELL`` environment variable, like this ::
+
+  CRAMSHELL=/bin/bash py.test
+
 If you wish to disable specific cram tests,
 list then in an ``.ini`` file like so::
 
