@@ -45,10 +45,16 @@ Usage
 Once installed, all ``.t`` files will be collected
 and run with cram,
 so installation should be all that is needed.
+
 If you wish to disable cram tests for an invocation of
 pytest, do::
 
   py.test --nocram
+
+
+To override the shell used by cram, do ::
+
+  py.test --shell="C:\git\bash.exe"
 
 If you wish to disable specific cram tests,
 list then in an ``.ini`` file like so::

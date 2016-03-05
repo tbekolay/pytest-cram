@@ -12,6 +12,8 @@ def pytest_addoption(parser):
     group = parser.getgroup("general")
     group.addoption("--nocram", action="store_true",
                     help="do not run cram tests")
+    group.addoption("--shell", default='/bin/sh',
+                    help="shell to run cram tests with")
     parser.addini("cramignore", type="linelist",
                   help="each line specifies a file or file pattern that will "
                        "be ignored")
@@ -48,7 +50,8 @@ class CramItem(pytest.Item, pytest.File):
     def runtest(self):
         with self.tmpdir.as_cwd():
             os.environ['CRAMTMP'] = str(self.tmpdir)
-            ins, outs, diff = cram.testfile(b(str(self.fspath)))
+            ins, outs, diff = cram.testfile(b(str(self.fspath)),
+                                            shell=pytest.config.option.shell)
         del os.environ['CRAMTMP']
 
         if outs is None and len(diff) == 0:
