@@ -7,7 +7,17 @@ def test_version():
     assert pytest_cram.__version__
 
 
+def test_nocram(testdir):
+    """Ensure that --nocram collects .py but not .t files."""
+    testdir.makefile('.t', "  $ true")
+    testdir.makepyfile("def test_(): assert True")
+    result = testdir.runpytest("--nocram")
+    assert result.ret == 0
+    result.stdout.fnmatch_lines(["test_nocram.py .", "*1 passed*"])
+
+
 def test_cramignore(testdir):
+    """Ensure that the cramignore option ignore the appropriate cram tests."""
     testdir.makeini("""
         [pytest]
         cramignore =
