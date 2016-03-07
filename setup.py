@@ -41,7 +41,7 @@ setup(
     long_description=long_description,
     install_requires=[
         "pytest>=2.8",
-        "cram>=0.5",
+        "cram>=0.7",
     ],
     tests_require=[],
     entry_points={

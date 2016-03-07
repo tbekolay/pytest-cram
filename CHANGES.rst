@@ -30,6 +30,12 @@ Release History
 
   Thanks to `Florian Rathgeber <https://github.com/kynan>`_ for the contribution!
 
+**Documentation**
+
+- Depend explicitly on ``cram>=0.7``. If you would like support for earlier
+  versions of cram, please
+  `file an issue <https://github.com/tbekolay/pytest-cram/issues/new>`_.
+
 0.1.0 (2016-02-28)
 ==================
 
