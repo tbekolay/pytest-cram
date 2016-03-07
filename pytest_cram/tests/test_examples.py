@@ -1,44 +1,10 @@
 import os
 
-import pytest_cram
-
 pytest_plugins = "pytester"
 
 
-def test_version():
-    assert pytest_cram.__version__
-
-
-def test_cramignore(testdir):
-    testdir.makeini("""
-        [pytest]
-        cramignore =
-            sub/a*.t
-            a.t
-            c*.t
-    """)
-    testdir.tmpdir.ensure("sub/a.t")
-    testdir.tmpdir.ensure("sub/a0.t")
-    testdir.tmpdir.ensure("a.t")
-    testdir.tmpdir.ensure("a0.t")
-    testdir.tmpdir.ensure("b.t")
-    testdir.tmpdir.ensure("b0.t")
-    testdir.tmpdir.ensure("c.t")
-    testdir.tmpdir.ensure("c0.t")
-
-    result = testdir.runpytest()
-    assert result.ret == 0
-    result.stdout.fnmatch_lines([
-        "*collected 3*",
-        "a0.t s",
-        "b.t s",
-        "b0.t s",
-        "*3 skipped*",
-    ])
-
-
 def test_hidden(testdir):
-    """Hidden tests from cram examples. Should not be collected."""
+    """Hidden examples. Should not be collected."""
 
     # Dealing with hidden paths, so easier with os.path.join
     p = str(testdir.tmpdir)
@@ -54,7 +20,7 @@ def test_hidden(testdir):
 
 
 def test_bare(testdir):
-    """Bare test from cram examples. Should pass."""
+    """Bare example. Should pass."""
     testdir.makefile('.t', "  $ true")
     result = testdir.runpytest()
     assert result.ret == 0
@@ -62,7 +28,7 @@ def test_bare(testdir):
 
 
 def test_empty(testdir):
-    """Empty test from cram examples. Should be skipped."""
+    """Empty example. Should be skipped."""
     testdir.makefile('.t', "")
     result = testdir.runpytest("-rs")
     assert result.ret == 0
@@ -73,7 +39,7 @@ def test_empty(testdir):
 
 
 def test_env(testdir):
-    """Environment test from cram examples. Should pass."""
+    """Environment example. Should pass."""
     testdir.makefile('.t', r"""
         Check environment variables:
 
@@ -106,7 +72,7 @@ def test_env(testdir):
 
 
 def test_fail(testdir):
-    """Fail test from cram examples. Should fail for several reasons."""
+    """Fail example. Should fail for several reasons."""
     testdir.makefile('.t', r"""
 Output needing escaping:
 
@@ -148,7 +114,7 @@ Offset regular expression:
 
 
 def test_missingeol(testdir):
-    """Missing EOL test from cram examples. Should pass."""
+    """Missing EOL example. Should pass."""
     testdir.makefile('.t', """
           $ printf foo
           foo (no-eol)
@@ -159,7 +125,7 @@ def test_missingeol(testdir):
 
 
 def test_skip(testdir):
-    """Skip test from cram examples. Should be marked as skipped."""
+    """Skip example. Should be marked as skipped."""
     testdir.makefile('.t', """
         This test is considered "skipped" because it exits with return code
         80. This is useful for skipping tests that only work on certain
@@ -175,7 +141,7 @@ def test_skip(testdir):
 
 
 def test_test(testdir):
-    """Functionality test from cram examples. Should pass."""
+    """Test example. Should pass."""
     testdir.makefile('.t', r"""
 Simple commands:
 
