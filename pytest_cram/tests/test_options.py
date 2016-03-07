@@ -1,3 +1,7 @@
+import os
+
+import pytest
+
 import pytest_cram
 
 pytest_plugins = "pytester"
@@ -14,6 +18,38 @@ def test_nocram(testdir):
     result = testdir.runpytest("--nocram")
     assert result.ret == 0
     result.stdout.fnmatch_lines(["test_nocram.py .", "*1 passed*"])
+
+
+@pytest.mark.parametrize('shell', ['/bin/sh', '/bin/bash'])
+def test_shell_cli(testdir, shell):
+    """Ensure that --shell changes the shell used."""
+    testdir.makefile('.t', r"""
+        Echoing $0 should give us the current shell.
+
+          $ echo "$0"
+          {}
+    """.format(shell))
+    result = testdir.runpytest("--shell={}".format(shell))
+    assert result.ret == 0
+    result.stdout.fnmatch_lines(["test_shell_cli.t .", "*1 passed*"])
+
+
+@pytest.mark.parametrize('shell', ['/bin/sh', '/bin/bash'])
+def test_shell_env(testdir, shell):
+    """Ensure that the CRAMSHELL variable changes the shell used."""
+    testdir.makefile('.t', r"""
+        Echoing $0 should give us the current shell.
+
+          $ echo "$0"
+          {0}
+          $ echo "$CRAMSHELL"
+          {0}
+    """.format(shell))
+    os.environ["CRAMSHELL"] = shell
+    result = testdir.runpytest()
+    del os.environ["CRAMSHELL"]
+    assert result.ret == 0
+    result.stdout.fnmatch_lines(["test_shell_env.t .", "*1 passed*"])
 
 
 def test_cramignore(testdir):

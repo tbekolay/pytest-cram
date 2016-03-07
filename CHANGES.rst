@@ -22,7 +22,13 @@ Release History
 0.1.1 (unreleased)
 ==================
 
+**Improvements**
 
+- Added the ``--shell`` command line option and now checks the ``CRAMSHELL``
+  environment variable to override the default ``/bin/sh`` shell.
+  (`#3 <https://github.com/tbekolay/pytest-cram/pull/3>`_)
+
+  Thanks to `Florian Rathgeber <https://github.com/kynan>`_ for the contribution!
 
 0.1.0 (2016-02-28)
 ==================
