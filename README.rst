@@ -33,35 +33,34 @@ Best of both worlds!
 Installation
 ============
 
-To install and use pytest-cram, do::
+To install and use pytest-cram, do ::
 
   pip install pytest-cram
 
-Nengo supports Python 2.6, 2.7, and 3.3+.
+pytest-cram works on Python 2.7 and 3.3+
+and with cram_ versions 0.7 and up.
 
 Usage
 =====
 
 Once installed, all ``.t`` files will be collected
-and run with cram,
-so installation should be all that is needed.
+and run with cram, so installation should be all that is needed.
 
 If you wish to disable cram tests for an invocation of
-pytest, do::
+pytest, do ::
 
   py.test --nocram
-
 
 To override the shell used by cram, do ::
 
   py.test --shell="C:\git\bash.exe"
 
-or set the ``CRAMSHELL`` environment variable, like this ::
+or set the ``CRAMSHELL`` environment variable ::
 
   CRAMSHELL=/bin/bash py.test
 
 If you wish to disable specific cram tests,
-list then in an ``.ini`` file like so::
+list them in a ``.ini`` file ::
 
   [pytest]
   cramignore = file1.t
