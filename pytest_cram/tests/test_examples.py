@@ -115,10 +115,7 @@ Offset regular expression:
 
 def test_missingeol(testdir):
     """Missing EOL example. Should pass."""
-    testdir.makefile('.t', """
-          $ printf foo
-          foo (no-eol)
-    """)
+    testdir.makefile('.t', "  $ printf foo", "  foo (no-eol)")
     result = testdir.runpytest()
     assert result.ret == 0
     result.stdout.fnmatch_lines(["test_missingeol.t .", "*1 passed*"])
