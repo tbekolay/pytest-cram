@@ -3,8 +3,8 @@ import re
 
 import cram
 import pytest
-from cram._encoding import b
 
+from .compat import b
 from .version import version as __version__
 
 
@@ -64,7 +64,7 @@ class CramItem(pytest.Item, pytest.File):
 
     def repr_failure(self, excinfo):
         if excinfo.errisinstance(CramError):
-            return b("").join(excinfo.value.args[0]).decode('utf-8')
+            return b("").join(excinfo.value.args[0]).decode('ascii')
         return super(CramItem, self).repr_failure(excinfo)
 
     def reportinfo(self):
