@@ -1,4 +1,5 @@
 import os
+import sys
 
 import pytest
 
@@ -20,6 +21,7 @@ def test_nocram(testdir):
     result.stdout.fnmatch_lines(["test_nocram.py .", "*1 passed*"])
 
 
+@pytest.mark.skipif(sys.platform == 'win32', reason="assuming Posix shell")
 @pytest.mark.parametrize('shell', ['/bin/sh', '/bin/bash'])
 def test_shell_cli(testdir, shell):
     """Ensure that --shell changes the shell used."""
@@ -34,6 +36,7 @@ def test_shell_cli(testdir, shell):
     result.stdout.fnmatch_lines(["test_shell_cli.t .", "*1 passed*"])
 
 
+@pytest.mark.skipif(sys.platform == 'win32', reason="assuming Posix shell")
 @pytest.mark.parametrize('shell', ['/bin/sh', '/bin/bash'])
 def test_shell_env(testdir, shell):
     """Ensure that the CRAMSHELL variable changes the shell used."""
@@ -61,8 +64,8 @@ def test_cramignore(testdir):
             a.t
             c*.t
     """)
-    testdir.tmpdir.ensure("sub/a.t")
-    testdir.tmpdir.ensure("sub/a0.t")
+    testdir.tmpdir.ensure(os.path.join("sub", "a.t"))
+    testdir.tmpdir.ensure(os.path.join("sub", "a0.t"))
     testdir.tmpdir.ensure("a.t")
     testdir.tmpdir.ensure("a0.t")
     testdir.tmpdir.ensure("b.t")

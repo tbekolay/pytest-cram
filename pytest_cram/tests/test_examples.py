@@ -58,14 +58,14 @@ def test_env(testdir):
           $ echo "$CRAMTMP"
           .+ (re)
           $ echo "$TESTDIR"
-          */testdir/test_env* (glob)
+          *{sep}testdir{sep}test_env* (glob)
           $ ls "$TESTDIR"
           test_env.t
           $ echo "$TESTFILE"
           test_env.t
           $ pwd
           */test_env* (glob)
-    """)
+    """.format(sep=os.path.sep))
     result = testdir.runpytest()
     assert result.ret == 0
     result.stdout.fnmatch_lines(["test_env.t .", "*1 passed*"])
