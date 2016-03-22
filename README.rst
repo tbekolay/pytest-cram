@@ -10,6 +10,10 @@
   :target: https://travis-ci.org/tbekolay/pytest-cram
   :alt: Travis-CI build status
 
+.. image:: https://ci.appveyor.com/api/projects/status/dxu61i3rbn847uje/branch/master?svg=true
+  :target: https://ci.appveyor.com/project/tbekolay/pytest-cram
+  :alt: AppVeyor build status
+
 .. image:: https://img.shields.io/coveralls/tbekolay/pytest-cram/master.svg
   :target: https://coveralls.io/r/tbekolay/pytest-cram?branch=master
   :alt: Test coverage
