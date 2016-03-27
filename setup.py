@@ -25,8 +25,6 @@ def read(*filenames, **kwargs):
 root = os.path.dirname(os.path.realpath(__file__))
 version_module = imp.load_source(
     'version', os.path.join(root, 'pytest_cram', 'version.py'))
-description = "Run cram tests with pytest."
-long_description = read('README.rst', 'CHANGES.rst')
 
 setup(
     name="pytest-cram",
@@ -37,8 +35,8 @@ setup(
     scripts=[],
     url="https://github.com/tbekolay/pytest-cram",
     license="MIT license",
-    description=description,
-    long_description=long_description,
+    description="Run cram tests with pytest.",
+    long_description=read('README.rst', 'CHANGES.rst'),
     install_requires=[
         "pytest>=2.8",
         "cram>=0.7",
@@ -48,10 +46,12 @@ setup(
         'pytest11': ['cram = pytest_cram'],
     },
     classifiers=[
-        'Programming Language :: Python',
+        'Framework :: Pytest',
+        'License :: OSI Approved :: MIT License',
         'Programming Language :: Python :: 2.7',
         'Programming Language :: Python :: 3.3',
         'Programming Language :: Python :: 3.4',
         'Programming Language :: Python :: 3.5',
+        'Topic :: Software Development :: Testing',
     ]
 )
