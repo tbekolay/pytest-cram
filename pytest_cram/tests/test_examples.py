@@ -24,7 +24,7 @@ def test_bare(testdir):
     testdir.makefile('.t', "  $ true")
     result = testdir.runpytest()
     assert result.ret == 0
-    result.stdout.fnmatch_lines(["test_bare.t .", "*1 passed*"])
+    result.stdout.fnmatch_lines(["test_bare.t .*", "*1 passed*"])
 
 
 def test_empty(testdir):
@@ -32,10 +32,10 @@ def test_empty(testdir):
     testdir.makefile('.t', "")
     result = testdir.runpytest("-rs")
     assert result.ret == 0
-    result.stdout.fnmatch_lines(["test_empty.t s",
+    result.stdout.fnmatch_lines(["test_empty.t s*",
                                  "*Test is empty",
                                  "*1 skipped*"])
-    result.stdout.fnmatch_lines(["test_empty.t s", "*1 skipped*"])
+    result.stdout.fnmatch_lines(["test_empty.t s*", "*1 skipped*"])
 
 
 def test_env(testdir):
@@ -58,7 +58,7 @@ def test_env(testdir):
           $ echo "$CRAMTMP"
           .+ (re)
           $ echo "$TESTDIR"
-          *{sep}testdir{sep}test_env* (glob)
+          *{sep}test_env* (glob)
           $ ls "$TESTDIR"
           test_env.t
           $ echo "$TESTFILE"
@@ -68,7 +68,7 @@ def test_env(testdir):
     """.format(sep=os.path.sep))
     result = testdir.runpytest()
     assert result.ret == 0
-    result.stdout.fnmatch_lines(["test_env.t .", "*1 passed*"])
+    result.stdout.fnmatch_lines(["test_env.t .*", "*1 passed*"])
 
 
 def test_fail(testdir):
@@ -103,7 +103,7 @@ Offset regular expression:
     # Subprocess needed for these weird shell commands
     result = testdir.runpytest()
     assert result.ret != 0
-    result.stdout.fnmatch_lines(["test_fail.t F",
+    result.stdout.fnmatch_lines(["test_fail.t F*",
                                  "@@ -1,18 +1,18 @@",
                                  r"+*\x11\x12 (esc)",
                                  r"*\x1e\x1f ' (esc)",
@@ -118,7 +118,7 @@ def test_missingeol(testdir):
     testdir.makefile('.t', "  $ printf foo", "  foo (no-eol)")
     result = testdir.runpytest()
     assert result.ret == 0
-    result.stdout.fnmatch_lines(["test_missingeol.t .", "*1 passed*"])
+    result.stdout.fnmatch_lines(["test_missingeol.t .*", "*1 passed*"])
 
 
 def test_skip(testdir):
@@ -132,7 +132,7 @@ def test_skip(testdir):
     """)
     result = testdir.runpytest("-rs")
     assert result.ret == 0
-    result.stdout.fnmatch_lines(["test_skip.t s",
+    result.stdout.fnmatch_lines(["test_skip.t s*",
                                  "*Process exited with return code 80",
                                  "*1 skipped*"])
 
@@ -222,4 +222,4 @@ might see broken pipe messages.
     """)
     result = testdir.runpytest()
     assert result.ret == 0
-    result.stdout.fnmatch_lines(["test_test.t .", "*1 passed*"])
+    result.stdout.fnmatch_lines(["test_test.t .*", "*1 passed*"])

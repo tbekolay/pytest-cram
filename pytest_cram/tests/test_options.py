@@ -18,7 +18,7 @@ def test_nocram(testdir):
     testdir.makepyfile("def test_(): assert True")
     result = testdir.runpytest("--nocram")
     assert result.ret == 0
-    result.stdout.fnmatch_lines(["test_nocram.py .", "*1 passed*"])
+    result.stdout.fnmatch_lines(["test_nocram.py .*", "*1 passed*"])
 
 
 @pytest.mark.skipif(sys.platform == 'win32', reason="assuming Posix shell")
@@ -33,7 +33,7 @@ def test_shell_cli(testdir, shell):
     """.format(shell))
     result = testdir.runpytest("--shell={}".format(shell))
     assert result.ret == 0
-    result.stdout.fnmatch_lines(["test_shell_cli.t .", "*1 passed*"])
+    result.stdout.fnmatch_lines(["test_shell_cli.t .*", "*1 passed*"])
 
 
 @pytest.mark.skipif(sys.platform == 'win32', reason="assuming Posix shell")
@@ -52,7 +52,7 @@ def test_shell_env(testdir, shell):
     result = testdir.runpytest()
     del os.environ["CRAMSHELL"]
     assert result.ret == 0
-    result.stdout.fnmatch_lines(["test_shell_env.t .", "*1 passed*"])
+    result.stdout.fnmatch_lines(["test_shell_env.t .*", "*1 passed*"])
 
 
 def test_cramignore(testdir):
@@ -77,8 +77,8 @@ def test_cramignore(testdir):
     assert result.ret == 0
     result.stdout.fnmatch_lines([
         "*collected 3*",
-        "a0.t s",
-        "b.t s",
-        "b0.t s",
+        "a0.t s*",
+        "b.t s*",
+        "b0.t s*",
         "*3 skipped*",
     ])
