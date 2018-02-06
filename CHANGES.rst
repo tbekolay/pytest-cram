@@ -13,21 +13,24 @@ Release History
 
 .. Changes should be organized in one of several sections:
 
-   - API changes
-   - Improvements
-   - Behavioural changes
-   - Bugfixes
-   - Documentation
+   - Added
+   - Changed
+   - Deprecated
+   - Removed
+   - Fixed
 
-0.1.2 (unreleased)
+0.2.0 (2018-02-06)
 ==================
 
+**Fixed**
 
+- Fixed tests to work with ``pytest>=3.3``. Pytest added progress indicators
+  to test output in version 3.3, which the tests were not expecting.
 
 0.1.1 (2016-03-07)
 ==================
 
-**Improvements**
+**Added**
 
 - Added the ``--shell`` command line option and now checks the ``CRAMSHELL``
   environment variable to override the default ``/bin/sh`` shell.
@@ -35,7 +38,7 @@ Release History
 
   Thanks to `Florian Rathgeber <https://github.com/kynan>`_ for the contribution!
 
-**Documentation**
+**Changed**
 
 - Depend explicitly on ``cram>=0.7``. If you would like support for earlier
   versions of cram, please
