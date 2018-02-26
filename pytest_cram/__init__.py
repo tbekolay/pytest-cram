@@ -38,7 +38,8 @@ class CramItem(pytest.Item, pytest.File):
     """A cram test collected by pytest."""
 
     def __init__(self, path, parent):
-        super(CramItem, self).__init__(path, parent)
+        pytest.Item.__init__(self, path, parent)
+        pytest.File.__init__(self, path, parent)
         self.add_marker("cram")
         tmpdir_factory = parent.config._tmpdirhandler
         name = re.sub("[\W]", "_", self.name)
@@ -60,7 +61,6 @@ class CramItem(pytest.Item, pytest.File):
             pytest.skip("Test is empty")
         elif diff:
             raise CramError(diff)
-
 
     def repr_failure(self, excinfo):
         if excinfo.errisinstance(CramError):
