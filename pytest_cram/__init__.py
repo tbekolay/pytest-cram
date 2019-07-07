@@ -47,12 +47,13 @@ class CramItem(pytest.Item, pytest.File):
         if len(name) > MAXVAL:
             name = name[:MAXVAL]
         self.tmpdir = tmpdir_factory.mktemp(name, numbered=True)
+        self.shell = parent.config.option.shell
 
     def runtest(self):
         with self.tmpdir.as_cwd():
             os.environ['CRAMTMP'] = str(self.tmpdir)
             ins, outs, diff = cram.testfile(b(str(self.fspath)),
-                                            shell=pytest.config.option.shell)
+                                            shell=self.shell)
         del os.environ['CRAMTMP']
 
         if outs is None and len(diff) == 0:
