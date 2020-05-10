@@ -27,7 +27,10 @@ def pytest_collect_file(path, parent):
             and not ignored
             and path.ext == '.t'
             and path.basename[0] not in ('.', '_')):
-        return CramItem(path, parent)
+        if hasattr(CramItem, 'from_parent'):
+            return CramItem.from_parent(parent, fspath=path)
+        else:
+            return CramItem(path, parent)
 
 
 def pytest_configure(config):
@@ -41,9 +44,9 @@ class CramError(Exception):
 class CramItem(pytest.Item, pytest.File):
     """A cram test collected by pytest."""
 
-    def __init__(self, path, parent):
-        pytest.Item.__init__(self, path, parent)
-        pytest.File.__init__(self, path, parent)
+    def __init__(self, fspath, parent):
+        pytest.Item.__init__(self, fspath, parent)
+        pytest.File.__init__(self, fspath, parent)
         self.add_marker("cram")
         tmpdir_factory = parent.config._tmpdirhandler
         name = re.sub("[\W]", "_", self.name)
