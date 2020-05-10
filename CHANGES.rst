@@ -19,6 +19,11 @@ Release History
    - Removed
    - Fixed
 
+0.2.2 (unreleased)
+==================
+
+
+
 0.2.1 (2020-05-10)
 ==================
 
@@ -26,7 +31,7 @@ Release History
 
 - Updated to use more recent pytest features.
   (`#11 <https://github.com/tbekolay/pytest-cram/pull/11>`_,
-  `#12 <https://github.com/tbekolay/pytest-cram/pull/12>`)
+  `#12 <https://github.com/tbekolay/pytest-cram/pull/12>`_)
 
 0.2.0 (2018-02-06)
 ==================
