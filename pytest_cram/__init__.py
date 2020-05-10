@@ -30,6 +30,10 @@ def pytest_collect_file(path, parent):
         return CramItem(path, parent)
 
 
+def pytest_configure(config):
+    config.addinivalue_line("markers", "cram: mark test to execute using cram")
+
+
 class CramError(Exception):
     """An error raised by cram."""
 
