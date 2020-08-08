@@ -8,10 +8,10 @@ def test_hidden(testdir):
 
     # Dealing with hidden paths, so easier with os.path.join
     p = str(testdir.tmpdir)
-    with open(os.path.join(p, ".hidden.t"), 'w') as fp:
+    with open(os.path.join(p, ".hidden.t"), "w") as fp:
         fp.write("This test is ignored because it's hidden.\n")
     os.mkdir(os.path.join(p, ".hidden"))
-    with open(os.path.join(p, ".hidden", "hidden.t"), 'w') as fp:
+    with open(os.path.join(p, ".hidden", "hidden.t"), "w") as fp:
         fp.write("This test is ignored because it's hidden.\n")
 
     result = testdir.runpytest()
@@ -21,7 +21,7 @@ def test_hidden(testdir):
 
 def test_bare(testdir):
     """Bare example. Should pass."""
-    testdir.makefile('.t', "  $ true")
+    testdir.makefile(".t", "  $ true")
     result = testdir.runpytest()
     assert result.ret == 0
     result.stdout.fnmatch_lines(["test_bare.t .*", "*1 passed*"])
@@ -29,18 +29,18 @@ def test_bare(testdir):
 
 def test_empty(testdir):
     """Empty example. Should be skipped."""
-    testdir.makefile('.t', "")
+    testdir.makefile(".t", "")
     result = testdir.runpytest("-rs")
     assert result.ret == 0
-    result.stdout.fnmatch_lines(["test_empty.t s*",
-                                 "*Test is empty",
-                                 "*1 skipped*"])
+    result.stdout.fnmatch_lines(["test_empty.t s*", "*Test is empty", "*1 skipped*"])
     result.stdout.fnmatch_lines(["test_empty.t s*", "*1 skipped*"])
 
 
 def test_env(testdir):
     """Environment example. Should pass."""
-    testdir.makefile('.t', r"""
+    testdir.makefile(
+        ".t",
+        r"""
         Check environment variables:
 
           $ echo "$LANG"
@@ -65,7 +65,10 @@ def test_env(testdir):
           test_env.t
           $ pwd
           */test_env* (glob)
-    """.format(sep=os.path.sep))
+    """.format(
+            sep=os.path.sep
+        ),
+    )
     result = testdir.runpytest()
     assert result.ret == 0
     result.stdout.fnmatch_lines(["test_env.t .*", "*1 passed*"])
@@ -73,7 +76,9 @@ def test_env(testdir):
 
 def test_fail(testdir):
     """Fail example. Should fail for several reasons."""
-    testdir.makefile('.t', r"""
+    testdir.makefile(
+        ".t",
+        r"""
 Output needing escaping:
 
   $ printf '\00\01\02\03\04\05\06\07\010\011\013\014\016\017\020\021\022\n'
@@ -98,24 +103,29 @@ Offset regular expression:
   $ printf 'foo\n\n1\n'
   
   \d (re)
-    """)
+    """,
+    )
 
     # Subprocess needed for these weird shell commands
     result = testdir.runpytest()
     assert result.ret != 0
-    result.stdout.fnmatch_lines(["test_fail.t F*",
-                                 "@@ -1,18 +1,18 @@",
-                                 r"+*\x11\x12 (esc)",
-                                 r"*\x1e\x1f ' (esc)",
-                                 "+  1",
-                                 "@@ -20,5 +20,6 @@",
-                                 "+  foo",
-                                 "*1 failed*"])
+    result.stdout.fnmatch_lines(
+        [
+            "test_fail.t F*",
+            "@@ -1,18 +1,18 @@",
+            r"+*\x11\x12 (esc)",
+            r"*\x1e\x1f ' (esc)",
+            "+  1",
+            "@@ -20,5 +20,6 @@",
+            "+  foo",
+            "*1 failed*",
+        ]
+    )
 
 
 def test_missingeol(testdir):
     """Missing EOL example. Should pass."""
-    testdir.makefile('.t', "  $ printf foo", "  foo (no-eol)")
+    testdir.makefile(".t", "  $ printf foo", "  foo (no-eol)")
     result = testdir.runpytest()
     assert result.ret == 0
     result.stdout.fnmatch_lines(["test_missingeol.t .*", "*1 passed*"])
@@ -123,23 +133,28 @@ def test_missingeol(testdir):
 
 def test_skip(testdir):
     """Skip example. Should be marked as skipped."""
-    testdir.makefile('.t', """
+    testdir.makefile(
+        ".t",
+        """
         This test is considered "skipped" because it exits with return code
         80. This is useful for skipping tests that only work on certain
         platforms or in certain settings.
 
           $ exit 80
-    """)
+    """,
+    )
     result = testdir.runpytest("-rs")
     assert result.ret == 0
-    result.stdout.fnmatch_lines(["test_skip.t s*",
-                                 "*Process exited with return code 80",
-                                 "*1 skipped*"])
+    result.stdout.fnmatch_lines(
+        ["test_skip.t s*", "*Process exited with return code 80", "*1 skipped*"]
+    )
 
 
 def test_test(testdir):
     """Test example. Should pass."""
-    testdir.makefile('.t', r"""
+    testdir.makefile(
+        ".t",
+        r"""
 Simple commands:
 
   $ echo foo
@@ -219,7 +234,8 @@ Command that closes a pipe:
 
 If Cram let Python's SIGPIPE handler get inherited by this script, we
 might see broken pipe messages.
-    """)
+    """,
+    )
     result = testdir.runpytest()
     assert result.ret == 0
     result.stdout.fnmatch_lines(["test_test.t .*", "*1 passed*"])

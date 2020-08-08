@@ -19,19 +19,24 @@ Release History
    - Removed
    - Fixed
 
-0.2.2 (unreleased)
+0.2.2 (2020-08-08)
 ==================
 
+**Fixed**
 
+- Updated for recent pytest changes. (`#13`_)
+
+.. _#13: https://github.com/tbekolay/pytest-cram/pull/13
 
 0.2.1 (2020-05-10)
 ==================
 
 **Fixed**
 
-- Updated to use more recent pytest features.
-  (`#11 <https://github.com/tbekolay/pytest-cram/pull/11>`_,
-  `#12 <https://github.com/tbekolay/pytest-cram/pull/12>`_)
+- Updated to use more recent pytest features. (`#11`_, `#12`_)
+
+.. _#11: https://github.com/tbekolay/pytest-cram/pull/11
+.. _#12: https://github.com/tbekolay/pytest-cram/pull/12
 
 0.2.0 (2018-02-06)
 ==================
@@ -47,8 +52,7 @@ Release History
 **Added**
 
 - Added the ``--shell`` command line option and now checks the ``CRAMSHELL``
-  environment variable to override the default ``/bin/sh`` shell.
-  (`#3 <https://github.com/tbekolay/pytest-cram/pull/3>`_)
+  environment variable to override the default ``/bin/sh`` shell. (`#3`_)
 
   Thanks to `Florian Rathgeber <https://github.com/kynan>`_ for the contribution!
 
@@ -57,6 +61,8 @@ Release History
 - Depend explicitly on ``cram>=0.7``. If you would like support for earlier
   versions of cram, please
   `file an issue <https://github.com/tbekolay/pytest-cram/issues/new>`_.
+
+.. _#3: https://github.com/tbekolay/pytest-cram/pull/3
 
 0.1.0 (2016-02-28)
 ==================

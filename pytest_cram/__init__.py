@@ -10,24 +10,30 @@ from .version import version as __version__
 
 def pytest_addoption(parser):
     group = parser.getgroup("general")
-    group.addoption("--nocram", action="store_true",
-                    help="do not run cram tests")
-    group.addoption("--shell", default=os.environ.get('CRAMSHELL', '/bin/sh'),
-                    help="shell to run cram tests with")
-    parser.addini("cramignore", type="linelist",
-                  help="each line specifies a file or file pattern that will "
-                       "be ignored")
+    group.addoption("--nocram", action="store_true", help="do not run cram tests")
+    group.addoption(
+        "--shell",
+        default=os.environ.get("CRAMSHELL", "/bin/sh"),
+        help="shell to run cram tests with",
+    )
+    parser.addini(
+        "cramignore",
+        type="linelist",
+        help="each line specifies a file or file pattern that will " "be ignored",
+    )
 
 
 def pytest_collect_file(path, parent):
     config = parent.config
     ignored = any(path.fnmatch(ig) for ig in config.getini("cramignore"))
 
-    if (not config.option.nocram
-            and not ignored
-            and path.ext == '.t'
-            and path.basename[0] not in ('.', '_')):
-        if hasattr(CramItem, 'from_parent'):
+    if (
+        not config.option.nocram
+        and not ignored
+        and path.ext == ".t"
+        and path.basename[0] not in (".", "_")
+    ):
+        if hasattr(CramItem, "from_parent"):
             return CramItem.from_parent(parent, fspath=path)
         else:
             return CramItem(path, parent)
@@ -58,10 +64,9 @@ class CramItem(pytest.Item, pytest.File):
 
     def runtest(self):
         with self.tmpdir.as_cwd():
-            os.environ['CRAMTMP'] = str(self.tmpdir)
-            ins, outs, diff = cram.testfile(b(str(self.fspath)),
-                                            shell=self.shell)
-        del os.environ['CRAMTMP']
+            os.environ["CRAMTMP"] = str(self.tmpdir)
+            ins, outs, diff = cram.testfile(b(str(self.fspath)), shell=self.shell)
+        del os.environ["CRAMTMP"]
 
         if outs is None and len(diff) == 0:
             pytest.skip("Process exited with return code 80")
@@ -72,7 +77,7 @@ class CramItem(pytest.Item, pytest.File):
 
     def repr_failure(self, excinfo):
         if excinfo.errisinstance(CramError):
-            return b("").join(excinfo.value.args[0]).decode('ascii')
+            return b("").join(excinfo.value.args[0]).decode("ascii")
         return super(CramItem, self).repr_failure(excinfo)
 
     def reportinfo(self):
